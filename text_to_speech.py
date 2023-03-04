@@ -1,34 +1,32 @@
+import locale
+import logging
 
-import argparse
-import os
-import subprocess
-import tempfile
+from aiy.board import Board
+from aiy.cloudspeech import CloudSpeechClient
 
-RUN_DIR = '/run/user/%d' % os.getuid()
+def locale_language():
+    language, _ = locale.getdefaultlocale()
+    return language
 
-def say(text, lang='en-US', volume=60, pitch=130, speed=100, device='default'):
-    data = "<volume level='%d'><pitch level='%d'><speed level='%d'>%s</speed></pitch></volume>" % \
-           (volume, pitch, speed, text)
-    with tempfile.NamedTemporaryFile(suffix='.wav', dir=RUN_DIR) as f:
-       cmd = 'pico2wave --wave %s --lang %s "%s" && aplay -q -D %s %s' % \
-             (f.name, lang, data, device, f.name)
-       subprocess.check_call(cmd, shell=True)
+def main():
+    language, _ = locale.getdefaultlocale()
+    logging.basicConfig(level=logging.DEBUG)
+    logging.info('Initializing for language %s...', language)
+    client = CloudSpeechClient()
+    with Board() as board:
+        while True:
+            logging.info('Say something.')
+            text = client.recognize(language_code=language)
+            if text is None:
+                logging.info('You said nothing.')
+                continue
 
-
-def _main():
-    parser = argparse.ArgumentParser(description='Text To Speech (pico2wave)')
-    parser.add_argument('--lang', default='en-US')
-    parser.add_argument('--volume', type=int, default=60)
-    parser.add_argument('--pitch', type=int, default=130)
-    parser.add_argument('--speed', type=int, default=100)
-    parser.add_argument('--device', default='default')
-    parser.add_argument('text', help='path to disk image file ')
-    args = parser.parse_args()
-    # text = args.text
-    text = "test"
-    say(text, lang=args.lang, volume=args.volume, pitch=args.pitch, speed=args.speed,
-        device=args.device)
-
+            logging.info('You said: "%s"' % text)
+            text = text.lower()
+            if 'goodbye' in text:
+                break
+            else:
+                pass
 
 if __name__ == '__main__':
-    _main()
+    main()
