@@ -3,6 +3,9 @@ import logging
 
 from aiy.cloudspeech import CloudSpeechClient
 from aiy.voice.tts import say
+import sys
+sys.path.insert(1, '/home/pi/csc482_lab4/CSChatBot-main')
+import chatbot, sql_queries
 
 def main():
     language, _ = locale.getdefaultlocale()
@@ -21,7 +24,14 @@ def main():
         if 'goodbye' in text:
             break
         else:
-            say(text)
+            bot = chatbot.ChatBot()
+            print("Hello I am EKK, your Cal Poly Virtual Assistant. How can I help you today?")
+            q = text
+            entities, answer = bot.get_sample_answers(q)
+            if answer != -1:
+                query = sql_queries.Query(q, entities, answer)
+                query.queryDB()
+            
 
 if __name__ == '__main__':
     main()
