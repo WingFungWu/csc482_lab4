@@ -1,7 +1,6 @@
 import locale
 import logging
 
-#from aiy.board import Board
 from aiy.cloudspeech import CloudSpeechClient
 from aiy.voice.tts import say
 
