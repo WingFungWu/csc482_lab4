@@ -17,7 +17,7 @@ def main():
 
         logging.info('You said: "%s"' % q)
         q = q.lower()
-        if re.search(f'goodbye|bye|exit|quit', q):
+        if re.search(r'goodbye|bye|exit|quit', q):
             break
         else:
             a = numeric.main(q)
