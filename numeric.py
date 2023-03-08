@@ -38,7 +38,7 @@ def roll_dice(query: str, resp='Sure, here are the dices:'):
     return resp
 
 def main(text: str):
-    if re.search(r'[+|-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
+    if re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
         return arith_operation(text)
     elif re.search(r'true|false', text.lower()):
         return logical_operation(text)
