@@ -26,9 +26,10 @@ def random_pick(query: str):
     return random.choice(query)
 
 def roll_dice(query: str, resp='Sure, here are the dices:'):
-    num_dice = re.search(r'[1-9][0-9]*', query)
+    num_dict = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10}
+    num_dice = re.search(r'one|two|three|four|five|six|seven|eight|nine|ten', query)
     if num_dice:
-        num_dice = int(num_dice.group())
+        num_dice = num_dict[num_dice.group()]
         for _ in range(num_dice):
             resp = resp + ' ' + str(random.randint(1, 6))
     else:
@@ -43,5 +44,5 @@ def main(text: str):
         return logical_operation(text)
     elif 'dice' in text:
         return roll_dice(text)
-    else:
+    elif 'or' in text:
         return random_pick(text)
