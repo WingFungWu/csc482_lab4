@@ -21,6 +21,7 @@ def main():
             break
         else:
             a = numeric.main(q)
+            logging.info('Response: "%s"' % a)
             say(a)
 
 if __name__ == '__main__':
