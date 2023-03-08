@@ -30,10 +30,10 @@ def roll_dice(query: str, resp='Sure, here are the dices:'):
     if num_dice:
         num_dice = int(num_dice.group())
         for _ in range(num_dice):
-            resp += f' {random.randint(1, 6)}'
+            resp = resp + ' ' + str(random.randint(1, 6))
     else:
         for _ in range(random.randint(1, 10)):
-            resp += f' {random.randint(1, 6)}'
+            resp = resp + ' ' + str(random.randint(1, 6))
     return resp
 
 def main(text: str):
