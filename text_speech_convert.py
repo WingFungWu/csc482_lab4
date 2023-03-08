@@ -1,9 +1,7 @@
-import locale
-import logging
+import locale, logging, re, numeric
 
 from aiy.cloudspeech import CloudSpeechClient
 from aiy.voice.tts import say
-from chatbot import chat
 
 def main():
     language, _ = locale.getdefaultlocale()
@@ -19,12 +17,11 @@ def main():
 
         logging.info('You said: "%s"' % q)
         q = q.lower()
-        if 'goodbye' in q:
+        if re.search(f'goodbye|bye|exit|quit', q):
             break
         else:
-            a = chat.respond(q)
+            a = numeric.main(q)
             say(a)
-            
 
 if __name__ == '__main__':
     main()
