@@ -68,5 +68,3 @@ def main():
     print(deleteList("hello"))
     print(clearList("hello"))
     print(deleteList("toDo"))
-
-main()
