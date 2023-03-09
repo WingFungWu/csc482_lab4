@@ -79,6 +79,8 @@ def get_wind(city):
     else:
         return "An error occurred fetching the wind data"
 
+
+
 def main():
     city= "San Luis Obispo"
     print(get_wind(city))
