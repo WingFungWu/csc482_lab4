@@ -3,7 +3,7 @@ import nltk, weather, list , numeric, re, yelp
 def get_city(pos):
     city_name = []
     for word, gram in pos:
-        if gram == "NNP":
+        if gram == "NNP" and word != "Celsius" and word != "Kelvin" and word != "Fahrenheit":
             city_name.append(word)
     return " ".join(city_name)
 
@@ -17,7 +17,7 @@ def run_command(text):
         else:
             if "celsius" in tokens or "Celsius" in tokens:
                 return weather.get_current_weather(city, f=False, c=True)
-            elif "kelvin" in tokens or "kelvin" in tokens:
+            elif "kelvin" in tokens or "Kelvin" in tokens:
                 return weather.get_current_weather(city, f=False, c=False)
             return weather.get_current_weather(city)
     elif ("highs" in tokens and "lows" in tokens) or ("high" in tokens and "low" in tokens):
@@ -27,7 +27,7 @@ def run_command(text):
         else:
             if "celsius" in tokens or "Celsius" in tokens:
                 return weather.get_high_low(city, f=False, c=True)
-            elif "kelvin" in tokens or "kelvin" in tokens:
+            elif "kelvin" in tokens or "Kelvin" in tokens:
                 return weather.get_high_low(city, f=False, c=False)
             return weather.get_high_low(city)
     elif "wind" in tokens or "winds" in tokens:
@@ -53,12 +53,12 @@ def run_command(text):
             return list.clearList( tokens[tokens.index("list")-1] )
         else:
             return "I cannot understand your command"
-    elif "many" in tokens and "yelp" in tokens and "reviews" in tokens:
+    elif "many" in tokens and "Yelp" in tokens and "reviews" in tokens:
         # get number of yelp reviews
         resturant = " ".join(tokens[tokens.index("does")+1: tokens.index("in")])
         city = " ".join(tokens[tokens.index("in")+1: tokens.index("have")])
         return yelp.getNumReviews(resturant, city)
-    elif "show" in tokens and "yelp" in tokens and "review" in tokens:
+    elif "show" in tokens and "Yelp" in tokens and "review" in tokens:
         # get a random yelp review
         resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
         city = " ".join(tokens[tokens.index("in")+1:])

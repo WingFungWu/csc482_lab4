@@ -2,7 +2,5 @@ google_auth_oauthlib==0.4.1
 gpiozero==1.6.2
 nltk==3.6.2
 picamera==1.13
-Pillow==9.4.0
-protobuf==4.22.1
 requests==2.25.1
 yelpapi==2.5.0
