@@ -1,4 +1,4 @@
-import nltk, weather, list , numeric, re
+import nltk, weather, list , numeric, re, yelp
 
 def get_city(pos):
     city_name = []
@@ -53,6 +53,36 @@ def run_command(text):
             return list.clearList( tokens[tokens.index("list")-1] )
         else:
             return "I cannot understand your command"
+    elif "many" in tokens and "yelp" in tokens and "reviews" in tokens:
+        # get number of yelp reviews
+        resturant = " ".join(tokens[tokens.index("does")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1: tokens.index("have")])
+        return yelp.getNumReviews(resturant, city)
+    elif "show" in tokens and "yelp" in tokens and "review" in tokens:
+        # get a random yelp review
+        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1:])
+        return yelp.getReview(resturant, city)
+    elif "cuisine" in tokens:
+        # get cuisine of resturant
+        resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1:])
+        return yelp.getCategory(resturant, city)
+    elif "expensive" in tokens:
+        # get num. of yelp dollar signs
+        resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1:])
+        return yelp.getPrice(resturant, city)
+    elif "address" in tokens:
+        # get address of resturant
+        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1:])
+        return yelp.getLocation(resturant, city)
+    elif "phone" in tokens:
+        # get phone number of resturant
+        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+        city = " ".join(tokens[tokens.index("in")+1:])
+        return yelp.getPhonNum(resturant, city)
     elif re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
         return numeric.arith_operation(text)
     elif re.search(r'true|false', text.lower()):
@@ -68,6 +98,7 @@ def run_command(text):
 
 def main():
     text = "How is the wind in London"
+    text = "what is the phone number of taqueria santa cruz in san luis obispo"
     result_text = run_command(text)
     print(result_text)
 
