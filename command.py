@@ -54,35 +54,53 @@ def run_command(text):
         else:
             return "I cannot understand your command"
     elif "many" in tokens and "Yelp" in tokens and "reviews" in tokens:
-        # get number of yelp reviews
-        resturant = " ".join(tokens[tokens.index("does")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1: tokens.index("have")])
-        return yelp.getNumReviews(resturant, city)
+        try:
+            # get number of yelp reviews
+            resturant = " ".join(tokens[tokens.index("does")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1: tokens.index("have")])
+            return yelp.getNumReviews(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif "show" in tokens and "Yelp" in tokens and "review" in tokens:
-        # get a random yelp review
-        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1:])
-        return yelp.getReview(resturant, city)
+        try:
+            # get a random yelp review
+            resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1:])
+            return yelp.getReview(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif "cuisine" in tokens:
-        # get cuisine of resturant
-        resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1:])
-        return yelp.getCategory(resturant, city)
+        try:
+            # get cuisine of resturant
+            resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1:])
+            return yelp.getCategory(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif "expensive" in tokens:
-        # get num. of yelp dollar signs
-        resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1:])
-        return yelp.getPrice(resturant, city)
+        try:
+            # get num. of yelp dollar signs
+            resturant = " ".join(tokens[tokens.index("is")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1:])
+            return yelp.getPrice(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif "address" in tokens:
-        # get address of resturant
-        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1:])
-        return yelp.getLocation(resturant, city)
+        try:
+            # get address of resturant
+            resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1:])
+            return yelp.getLocation(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif "phone" in tokens:
-        # get phone number of resturant
-        resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
-        city = " ".join(tokens[tokens.index("in")+1:])
-        return yelp.getPhonNum(resturant, city)
+        try:
+            # get phone number of resturant
+            resturant = " ".join(tokens[tokens.index("of")+1: tokens.index("in")])
+            city = " ".join(tokens[tokens.index("in")+1:])
+            return yelp.getPhonNum(resturant, city)
+        except:
+            return "I cannot understand your command"
     elif re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
         return numeric.arith_operation(text)
     elif re.search(r'true|false', text.lower()):
