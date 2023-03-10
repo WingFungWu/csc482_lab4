@@ -2,7 +2,8 @@ import os
 
 def createList(lstName):
     try:
-        open(lstName+".txt","x")
+        f=open(lstName+".txt","x")
+        f.close()
         return "List " + lstName + " has been created"
     except:
         return "List " + lstName + " already exists"
@@ -12,6 +13,7 @@ def addToList(lstName,item):
         return "List " + lstName + " does not exist"
     f = open(lstName + ".txt", "a") 
     f.write(item+"\n")
+    f.close()
     return item + " added to " + lstName
 
 def removeFromList(lstName,item):
@@ -27,6 +29,7 @@ def removeFromList(lstName,item):
             w.write(l)
         else:
             removed=True
+    w.close()   
     if removed:
         return item + " has been removed from " + lstName
     return item + " was not in " + lstName
@@ -42,6 +45,7 @@ def readList(lstName):
         return "List " + lstName + " does not exist"
     f = open(lstName + ".txt", "r")
     a = f.readlines()
+    f.close()
     if len(a) ==0:
         return "There is nothing in " + lstName
     else:
@@ -68,3 +72,4 @@ def main():
     print(deleteList("hello"))
     print(clearList("hello"))
     print(deleteList("toDo"))
+
