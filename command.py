@@ -30,6 +30,12 @@ def run_command(text):
             elif "kelvin" in tokens or "kelvin" in tokens:
                 return weather.get_high_low(city, f=False, c=False)
             return weather.get_high_low(city)
+    elif "wind" in tokens or "winds" in tokens:
+        city = get_city(pos)
+        if len(city) == 0:
+            return "Please specify a city"
+        else:
+            return weather.get_wind(city)
     elif "list" in tokens:
         if "create" in tokens:  #create new ... list  // create a new ... list // creat a new ... list please
             return list.createList( tokens[tokens.index("list")-1] )
@@ -61,16 +67,16 @@ def run_command(text):
 
 
 def main():
-    text = "What are the highs and lows in San Luis Obispo"
+    text = "How is the wind in London"
     result_text = run_command(text)
     print(result_text)
 
-    print( run_command("create new tasks list"))
-    print( run_command("add pick up george from to football to my tasks list"))
-    #print( run_command("remove pick up george from to football from my tasks list"))
-    #print( run_command("clear tasks list"))
-    print( run_command("read from tasks list"))
-    print(run_command("delete tasks list"))
+    # print( run_command("create new tasks list"))
+    # print( run_command("add pick up george from to football to my tasks list"))
+    # #print( run_command("remove pick up george from to football from my tasks list"))
+    # #print( run_command("clear tasks list"))
+    # print( run_command("read from tasks list"))
+    # print(run_command("delete tasks list"))
 
 if __name__ == "__main__":
     main()
