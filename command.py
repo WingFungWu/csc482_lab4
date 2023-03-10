@@ -1,6 +1,4 @@
-import nltk
-import weather
-import list
+import nltk, weather, list , numeric, re
 
 def get_city(pos):
     city_name = []
@@ -49,6 +47,14 @@ def run_command(text):
             return list.clearList( tokens[tokens.index("list")-1] )
         else:
             return "I cannot understand your command"
+    elif re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
+        return numeric.arith_operation(text)
+    elif re.search(r'true|false', text.lower()):
+        return numeric.logical_operation(text)
+    elif "dice" in text:
+        return numeric.roll_dice(text)
+    elif 'or' in text:
+        return numeric.random_pick(text)
     else:
         return "I cannot understand your command"
 

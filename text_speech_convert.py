@@ -1,4 +1,4 @@
-import locale, logging, re, numeric
+import locale, logging, re, command
 
 from aiy.cloudspeech import CloudSpeechClient
 from aiy.voice.tts import say
@@ -16,11 +16,10 @@ def main():
             continue
 
         logging.info('You said: "%s"' % q)
-        q = q.lower()
         if re.search(r'goodbye|bye|exit|quit', q):
             break
         else:
-            a = numeric.main(q)
+            a = command.run_command(q)
             logging.info('Response: "%s"' % a)
             say(a)
 
