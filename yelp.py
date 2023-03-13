@@ -16,7 +16,8 @@ def checkEditDistance(request, response):
 
 def getNumReviews(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         num_reviews = response['businesses'][0]['review_count']
         ret_str = "{a} in {b} has {c} reviews".format(a=resturant, b=location, c=num_reviews)
         return ret_str
@@ -25,7 +26,8 @@ def getNumReviews(resturant, location):
 
 def getReview(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         id = response['businesses'][0]['id']
         review = random.choice(yelp_api.reviews_query(id=id, locale="en_US")["reviews"])
         ret_str = "Here is a random review of {a} in {b}. {c} gave the resturant a rating of {d} stars and said: {e}".format(a=resturant, b=location, c=review['user']['name'], d=review['rating'], e=review['text'])
@@ -35,8 +37,8 @@ def getReview(resturant, location):
 
 def getCategory(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    print(response)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         category = response['businesses'][0]['categories'][0]['title']
         ret_str = "{a} in {b} is {c}".format(a=resturant, b=location, c=category)
         return ret_str
@@ -45,7 +47,8 @@ def getCategory(resturant, location):
 
 def getRating(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         rating = response['businesses'][0]['rating']
         ret_str = "{a} in {b} has a rating of {c}".format(a=resturant, b=location, c=str(rating))
         return ret_str
@@ -54,7 +57,8 @@ def getRating(resturant, location):
 
 def getPrice(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         price = len(response['businesses'][0]['price'])
         ret_str = "{a} in {b} has {c} dollar signs".format(a=resturant, b=location, c=str(price))
         return ret_str
@@ -63,7 +67,8 @@ def getPrice(resturant, location):
 
 def getLocation(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         address = response['businesses'][0]['location']['address1'] + " " + response['businesses'][0]['location']['city'] + " " + response['businesses'][0]['location']['zip_code']
         ret_str = "The address for {a} is {b}".format(a=resturant, b=address)
         return ret_str
@@ -72,10 +77,10 @@ def getLocation(resturant, location):
 
 def getPhonNum(resturant, location):
     response = yelp_api.search_query(term=resturant, location=location, limit=1)
-    if response['businesses']:
+    res_loc = response['businesses'][0]['location']['city'].lower()
+    if response['businesses'] and location.lower() == res_loc:
         phone_num = response['businesses'][0]['display_phone']
         ret_str = "The phone number for {a} in {b} is {c}".format(a=resturant, b=location, c=phone_num)
         return ret_str
     else:
         return error_msg(resturant, location)
-
