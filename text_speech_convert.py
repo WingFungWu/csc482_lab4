@@ -11,11 +11,10 @@ def main():
     client = CloudSpeechClient()
     with Board() as board:
         while True:
-            board.button.wait_for_press()
             logging.info('Say something after you press the button.')
+            board.button.wait_for_press()
             board.led.state = Led.ON
             q = client.recognize(language_code=language)
-            board.button.wait_for_release()
             board.led.state = Led.OFF
             
             if q is None:

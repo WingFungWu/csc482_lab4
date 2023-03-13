@@ -101,12 +101,12 @@ def run_command(text):
             return yelp.getPhonNum(resturant, city)
         except:
             return "I cannot understand your command"
+    elif "dice" in text:
+        return numeric.roll_dice(text)
     elif re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
         return numeric.arith_operation(text)
     elif re.search(r'true|false', text.lower()):
         return numeric.logical_operation(text)
-    elif "dice" in text:
-        return numeric.roll_dice(text)
     elif 'or' in text:
         return numeric.random_pick(text)
     else:

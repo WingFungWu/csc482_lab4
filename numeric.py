@@ -26,23 +26,28 @@ def random_pick(query: str):
     return random.choice(query)
 
 def roll_dice(query: str, resp='Sure, here are the dices:'):
-    num_dict = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10}
-    num_dice = re.search(r'one|two|three|four|five|six|seven|eight|nine|ten', query)
-    if num_dice:
-        num_dice = num_dict[num_dice.group()]
-        for _ in range(num_dice):
-            resp = resp + ' ' + str(random.randint(1, 6))
+    
+    query = [num for num in re.findall(r'[0-9]*', query) if num]
+    if len(query) > 1:
+        num_dice = int(query[0])
+        type_dice = int(query[1])
+    elif len(query) == 1:
+        num_dice = random.randint(1, 10)
+        type_dice = int(query[0])
     else:
-        for _ in range(random.randint(1, 10)):
-            resp = resp + ' ' + str(random.randint(1, 6))
+        num_dice = random.randint(1, 10)
+        type_dice = random.choice([6, 12])
+        
+    for _ in range(num_dice):
+        resp = resp + ' ' + str(random.randint(1, type_dice))
     return resp
 
 def main(text: str):
-    if re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
+    if 'dice' in text:
+        return roll_dice(text)
+    elif re.search(r'[+|\-|/|*|//]|module|integer division|exponent|bit shift|exclusive or', text):
         return arith_operation(text)
     elif re.search(r'true|false', text.lower()):
         return logical_operation(text)
-    elif 'dice' in text:
-        return roll_dice(text)
     elif 'or' in text:
         return random_pick(text)
